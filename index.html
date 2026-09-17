@@ -137,7 +137,7 @@ var initialItems=defaults.map(function(x){return {id:id(),name:x[0],qty:x[1],uni
 var state=read('suncrackers_v2',null);
 if(!state||!Array.isArray(state.items)){state={items:initialItems,bills:[],expenses:read('sc-expenses',[]),partners:read('sc-partners',[])}}
 state.bills=Array.isArray(state.bills)?state.bills:[];state.expenses=Array.isArray(state.expenses)?state.expenses:[];state.partners=Array.isArray(state.partners)?state.partners:[];
-function save(){try{localStorage.setItem('suncrackers_v2',JSON.stringify(state));byId('saveStatus').textContent='Saved'}catch(e){}renderAll()}
+function save(){try{localStorage.setItem('suncrackers_v2',JSON.stringify(state))}catch(e){}renderAll()}
 function toast(t){var el=byId('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},1700)}
 function sum(list,fn){return list.reduce(function(a,x){return a+num(fn(x))},0)}
 function actionButtons(kind,itemId){return '<button type="button" class="edit" data-edit="'+kind+'" data-id="'+esc(itemId)+'">Edit</button> <button type="button" class="delete" data-delete="'+kind+'" data-id="'+esc(itemId)+'">Delete</button>'}
