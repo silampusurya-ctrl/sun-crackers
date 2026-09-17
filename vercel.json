@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/neon-auth/:path*",
-      "destination": "https://ep-aged-surf-audmeorm.neonauth.c-10.us-east-1.aws.neon.tech/suncrackers/auth/:path*"
+      "destination": "/api/neon-proxy?kind=auth&path=:path*"
     },
     {
       "source": "/neon-data/:path*",
-      "destination": "https://ep-aged-surf-audmeorm.apirest.c-10.us-east-1.aws.neon.tech/suncrackers/rest/v1/:path*"
+      "destination": "/api/neon-proxy?kind=data&path=:path*"
     }
   ]
 }
