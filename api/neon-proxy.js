@@ -14,7 +14,8 @@ module.exports=async function handler(req,res){
       else if(value!=null)target.searchParams.append(key,String(value));
     }
     const headers={...req.headers};
-    delete headers.host;delete headers.connection;delete headers['content-length'];delete headers['transfer-encoding'];
+    delete headers.host;delete headers.connection;delete headers['content-length'];delete headers['transfer-encoding'];delete headers.forwarded;
+    Object.keys(headers).forEach(k=>{if(k.startsWith('x-forwarded-')||k.startsWith('x-vercel-'))delete headers[k]});
     headers['accept-encoding']='identity';
     let body;
     if(req.method!=='GET'&&req.method!=='HEAD'){
