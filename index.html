@@ -74,6 +74,39 @@ body.authenticated .app{display:grid}.auth-screen{min-height:100vh;display:grid;
   .card{min-height:136px;padding:13px}
   .card strong{font-size:19px}
 }
+
+/* Simplified mobile reading */
+@media (max-width:600px){
+  .top h1{font-size:25px}
+  .cards{gap:9px}
+  .card{min-height:120px;padding:14px}
+  .card p{margin:13px 0 5px;font-size:12px;font-weight:700;color:#695b5e}
+  .card.red p{color:#ffe7ec}
+  .card strong{font-size:clamp(19px,5.3vw,22px)}
+  .card small{display:none!important}
+  .cards .card:last-child{min-height:110px}
+  .panel-head p,.section-head p,.notice{display:none!important}
+  .panel h2,.section-head h2{font-size:21px}
+  .side{height:calc(70px + env(safe-area-inset-bottom))}
+  .side nav{grid-template-columns:repeat(6,minmax(52px,1fr))}
+  .nav{height:53px;flex-direction:column;gap:3px}
+  .nav i{font-size:18px}
+  .nav span{display:block!important;max-width:100%;overflow:hidden;text-overflow:ellipsis;font-size:9px;font-weight:700;line-height:1;white-space:nowrap}
+  .table-wrap{overflow:visible;border:0;border-radius:0}
+  table{width:100%;min-width:0}
+  thead{display:none}
+  tbody{display:grid;gap:10px}
+  tbody tr{display:block;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:#fffdf9;box-shadow:0 5px 14px #6d30130b}
+  tbody td{display:grid;grid-template-columns:minmax(82px,38%) minmax(0,1fr);gap:8px;align-items:start;padding:7px 0;border:0;text-align:left!important;overflow-wrap:anywhere}
+  tbody td::before{content:attr(data-label);color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+  tbody td.empty{display:block;padding:20px;text-align:center!important}
+  tbody td.empty::before{display:none}
+  tbody td .edit,tbody td .delete{margin:2px 4px 2px 0}
+  .tools{margin:12px 0}
+  .field label{font-size:11px;font-weight:700}
+  .field input,.field select,.field textarea{min-height:46px;font-size:15px}
+  .primary,.secondary{min-height:46px}
+}
 </style>
 </head>
 <body>
@@ -92,24 +125,24 @@ body.authenticated .app{display:grid}.auth-screen{min-height:100vh;display:grid;
 <div class="brand"><div class="logo">✦</div><div><b>SUN</b><small>CRACKERS</small></div></div>
 <p class="label">BUSINESS MENU</p>
 <nav>
-<a class="nav active" href="#dashboard" data-view="dashboard"><i>▦</i><span>Dashboard</span></a>
-<a class="nav" href="#inventory" data-view="inventory"><i>◫</i><span>Inventory</span></a>
-<a class="nav" href="#bills" data-view="bills"><i>▤</i><span>Purchase Bills</span></a><a class="nav" href="#sales" data-view="sales"><i>↗</i><span>Sales Bills</span></a>
-<a class="nav" href="#expenses" data-view="expenses"><i>₹</i><span>Expenses</span></a>
+<a class="nav active" href="#dashboard" data-view="dashboard"><i>▦</i><span>Home</span></a>
+<a class="nav" href="#inventory" data-view="inventory"><i>◫</i><span>Stock</span></a>
+<a class="nav" href="#bills" data-view="bills"><i>▤</i><span>Buy</span></a><a class="nav" href="#sales" data-view="sales"><i>↗</i><span>Sales</span></a>
+<a class="nav" href="#expenses" data-view="expenses"><i>₹</i><span>Expense</span></a>
 <a class="nav" href="#partners" data-view="partners"><i>♧</i><span>Partners</span></a>
 </nav>
 <div class="saved"><b>● Auto saved</b><small>All logged-in users share cloud data.</small></div>
 </aside>
 <section class="work">
-<header class="top"><div><p class="eyebrow">SUN CRACKERS · BUSINESS CONTROL</p><h1>Business Dashboard ✦</h1><p>Every saved update instantly changes the totals.</p></div><div class="top-actions"><span class="user-chip" id="userEmail"></span><button type="button" class="small-btn install" id="installApp">Install App</button><button type="button" class="small-btn logout" id="logout">Logout</button><button type="button" class="spark" id="spark" title="Celebrate">🎆</button></div></header>
+<header class="top"><div><p class="eyebrow">SUN CRACKERS · BUSINESS CONTROL</p><h1>Dashboard ✦</h1><p>Every saved update instantly changes the totals.</p></div><div class="top-actions"><span class="user-chip" id="userEmail"></span><button type="button" class="small-btn install" id="installApp">Install App</button><button type="button" class="small-btn logout" id="logout">Logout</button><button type="button" class="spark" id="spark" title="Celebrate">🎆</button></div></header>
 
 <section class="view active" id="dashboard">
 <div class="cards">
-<article class="card red"><span class="icon">₹</span><p>Inventory value</p><strong id="mInventory">₹0</strong><small>Quantity × unit rate</small></article>
-<article class="card"><span class="icon">◫</span><p>Total stock</p><strong id="mStock">0</strong><small id="mTypes">0 item types</small></article>
-<article class="card"><span class="icon">▤</span><p>Purchase bills</p><strong id="mBills">₹0</strong><small id="mBillCount">0 bills</small></article>
+<article class="card red"><span class="icon">₹</span><p>Stock Value</p><strong id="mInventory">₹0</strong><small>Quantity × unit rate</small></article>
+<article class="card"><span class="icon">◫</span><p>Stock Qty</p><strong id="mStock">0</strong><small id="mTypes">0 item types</small></article>
+<article class="card"><span class="icon">▤</span><p>Purchases</p><strong id="mBills">₹0</strong><small id="mBillCount">0 bills</small></article>
 <article class="card"><span class="icon">₹</span><p>Expenses</p><strong id="mExpenses">₹0</strong><small>Other business costs</small></article>
-<article class="card"><span class="icon">♧</span><p>Partner investment</p><strong id="mPartners">₹0</strong><small id="mPartnerCount">0 partners</small></article><article class="card"><span class="icon">↗</span><p>Total sales</p><strong id="mSales">₹0</strong><small id="mSaleCount">0 sales bills</small></article><article class="card"><span class="icon">◎</span><p>Sales target</p><strong id="mTarget">₹0</strong><small id="mTargetStatus">Set your target</small></article>
+<article class="card"><span class="icon">♧</span><p>Partner Paid</p><strong id="mPartners">₹0</strong><small id="mPartnerCount">0 partners</small></article><article class="card"><span class="icon">↗</span><p>Total sales</p><strong id="mSales">₹0</strong><small id="mSaleCount">0 sales bills</small></article><article class="card"><span class="icon">◎</span><p>Sales Target</p><strong id="mTarget">₹0</strong><small id="mTargetStatus">Set your target</small></article>
 </div>
 <div class="panel target-panel"><form id="targetForm" class="target-form"><div class="field"><label>Target sales amount ₹</label><input id="targetSalesInput" type="number" min="0" step=".01" placeholder="Enter target amount"></div><button class="primary" type="submit">Save target</button></form><div><div class="sales-progress"><i id="targetProgressBar"></i></div><div class="progress-meta"><span id="targetProgressText">₹0 / ₹0</span><b id="targetRemaining">Set a target</b></div></div></div>
 <div class="panel"><div class="panel-head"><div><p class="eyebrow">LIVE ANALYTICS</p><h2>Highest stock investments</h2><p>Changes automatically when quantity or rate is edited.</p></div><div class="badge"><b id="mTotalCost">₹0</b><small>INVENTORY + EXPENSES</small></div></div><div class="bars" id="bars"></div></div>
@@ -278,7 +311,7 @@ var selected=byId('paymentPartner').value;byId('paymentPartner').innerHTML='<opt
 byId('partnerRows').innerHTML=state.partners.map(function(x){var partnerPaid=sum(state.partnerPayments.filter(function(p){return String(p.partnerId)===String(x.id)}),function(p){return p.amount}),partnerBalance=Math.max(0,num(x.investment)-partnerPaid);return '<tr><td><b>'+esc(x.name)+'</b></td><td>'+esc(x.role||'Partner')+'</td><td class="num">'+money(x.investment)+'</td><td class="num"><b>'+money(partnerPaid)+'</b></td><td class="num">'+money(partnerBalance)+'</td><td class="num">'+num(x.share)+'%</td><td>'+actionButtons('partner',x.id)+'</td></tr>'}).join('');
 }
 function renderPayments(){byId('paymentCount').textContent=state.partnerPayments.length;byId('paymentEmpty').style.display=state.partnerPayments.length?'none':'block';byId('paymentRows').innerHTML=state.partnerPayments.map(function(x){var partner=state.partners.find(function(p){return String(p.id)===String(x.partnerId)});return '<tr><td>'+esc(x.date||'-')+'</td><td><b>'+esc(partner?partner.name:x.partnerName||'Unknown')+'</b></td><td class="num"><b>'+money(x.amount)+'</b></td><td>'+esc(x.purpose||'')+'</td><td>'+esc(x.method||'')+'</td><td>'+esc(x.reference||'')+'</td><td>'+esc(x.enteredBy||'Admin')+'</td><td>'+actionButtons('payment',x.id)+'</td></tr>'}).join('')}
-function normalizeState(){state.sales=Array.isArray(state.sales)?state.sales:[];state.settings=state.settings&&typeof state.settings==='object'?state.settings:{targetSales:0}}function renderAll(){normalizeState();renderDashboard();renderItems();renderBills();renderSales();renderExpenses();renderPartners();renderPayments()}
+function normalizeState(){state.sales=Array.isArray(state.sales)?state.sales:[];state.settings=state.settings&&typeof state.settings==='object'?state.settings:{targetSales:0}}function applyTableLabels(){document.querySelectorAll('table').forEach(function(table){var labels=Array.from(table.querySelectorAll('thead th')).map(function(th){return th.textContent.trim()});table.querySelectorAll('tbody tr').forEach(function(row){Array.from(row.children).forEach(function(td,i){td.setAttribute('data-label',labels[i]||'Details')})})})}function renderAll(){normalizeState();renderDashboard();renderItems();renderBills();renderSales();renderExpenses();renderPartners();renderPayments();applyTableLabels()}
 function resetForm(kind){
 var form=byId(kind+'Form');form.reset();byId(kind+'Id').value='';byId(kind+'Save').textContent=kind==='item'?'＋ Add item':kind==='bill'?'＋ Add bill':kind==='expense'?'＋ Add expense':kind==='payment'?'＋ Add payment':kind==='sale'?'＋ Add sale':'＋ Add partner';byId(kind+'Cancel').hidden=true;
 if(kind==='item')byId('itemQty').value=60;if(kind==='bill')byId('billDate').value=today();if(kind==='expense')byId('expenseDate').value=today();if(kind==='partner'){byId('partnerInvestment').value=0;byId('partnerShare').value=0}if(kind==='payment')byId('paymentDate').value=today();if(kind==='sale'){byId('saleDate').value=today();byId('saleQty').value=1}
