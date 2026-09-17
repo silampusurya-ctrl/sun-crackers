@@ -167,7 +167,7 @@ body.authenticated .app{display:grid}.auth-screen{min-height:100vh;display:grid;
 <div class="toast" id="toast"></div>
 <script type="module">
 import { createClient } from 'https://esm.sh/@neondatabase/neon-js@0.7.0-beta';
-const client=createClient({auth:{url:'https://ep-aged-surf-audmeorm.neonauth.c-10.us-east-1.aws.neon.tech/suncrackers/auth'},dataApi:{url:'https://ep-aged-surf-audmeorm.apirest.c-10.us-east-1.aws.neon.tech/suncrackers/rest/v1'}});
+const client=createClient({auth:{url:location.origin+'/neon-auth'},dataApi:{url:location.origin+'/neon-data'}});
 const MASTER_EMAIL='suncrackers2024@gmail.com';
 (async function(){
 'use strict';
