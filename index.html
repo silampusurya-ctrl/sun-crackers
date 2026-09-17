@@ -107,6 +107,13 @@ body.authenticated .app{display:grid}.auth-screen{min-height:100vh;display:grid;
   .field input,.field select,.field textarea{min-height:46px;font-size:15px}
   .primary,.secondary{min-height:46px}
 }
+
+.card[data-go]{position:relative;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.card[data-go]::after{content:'›';position:absolute;right:14px;top:14px;display:grid;place-items:center;width:27px;height:27px;border-radius:999px;color:var(--red);background:#fff2b3;font-size:22px;font-weight:800;line-height:1}
+.card.red[data-go]::after{color:#fff;background:#ffffff24}
+.card[data-go]:hover,.card[data-go]:focus-visible{transform:translateY(-3px);border-color:#d9ae4c;box-shadow:0 15px 30px #6d301322;outline:0}
+.card[data-go]:active{transform:scale(.98)}
+@media(max-width:600px){.card[data-go]::after{right:11px;top:11px;width:25px;height:25px;font-size:20px}.card[data-go]:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -138,13 +145,13 @@ body.authenticated .app{display:grid}.auth-screen{min-height:100vh;display:grid;
 
 <section class="view active" id="dashboard">
 <div class="cards">
-<article class="card red"><span class="icon">₹</span><p>Stock Value</p><strong id="mInventory">₹0</strong><small>Quantity × unit rate</small></article>
-<article class="card"><span class="icon">◫</span><p>Stock Qty</p><strong id="mStock">0</strong><small id="mTypes">0 item types</small></article>
-<article class="card"><span class="icon">▤</span><p>Purchases</p><strong id="mBills">₹0</strong><small id="mBillCount">0 bills</small></article>
-<article class="card"><span class="icon">₹</span><p>Expenses</p><strong id="mExpenses">₹0</strong><small>Other business costs</small></article>
-<article class="card"><span class="icon">♧</span><p>Partner Paid</p><strong id="mPartners">₹0</strong><small id="mPartnerCount">0 partners</small></article><article class="card"><span class="icon">↗</span><p>Total sales</p><strong id="mSales">₹0</strong><small id="mSaleCount">0 sales bills</small></article><article class="card"><span class="icon">◎</span><p>Sales Target</p><strong id="mTarget">₹0</strong><small id="mTargetStatus">Set your target</small></article>
+<article class="card red" data-go="inventory" role="button" tabindex="0" aria-label="Open inventory details"><span class="icon">₹</span><p>Stock Value</p><strong id="mInventory">₹0</strong><small>Quantity × unit rate</small></article>
+<article class="card" data-go="inventory" role="button" tabindex="0" aria-label="Open stock details"><span class="icon">◫</span><p>Stock Qty</p><strong id="mStock">0</strong><small id="mTypes">0 item types</small></article>
+<article class="card" data-go="bills" role="button" tabindex="0" aria-label="Open purchase bills"><span class="icon">▤</span><p>Purchases</p><strong id="mBills">₹0</strong><small id="mBillCount">0 bills</small></article>
+<article class="card" data-go="expenses" role="button" tabindex="0" aria-label="Open expenses"><span class="icon">₹</span><p>Expenses</p><strong id="mExpenses">₹0</strong><small>Other business costs</small></article>
+<article class="card" data-go="partners" role="button" tabindex="0" aria-label="Open partner details"><span class="icon">♧</span><p>Partner Paid</p><strong id="mPartners">₹0</strong><small id="mPartnerCount">0 partners</small></article><article class="card" data-go="sales" role="button" tabindex="0" aria-label="Open sales details"><span class="icon">↗</span><p>Total sales</p><strong id="mSales">₹0</strong><small id="mSaleCount">0 sales bills</small></article><article class="card" data-go="target" role="button" tabindex="0" aria-label="Open sales target"><span class="icon">◎</span><p>Sales Target</p><strong id="mTarget">₹0</strong><small id="mTargetStatus">Set your target</small></article>
 </div>
-<div class="panel target-panel"><form id="targetForm" class="target-form"><div class="field"><label>Target sales amount ₹</label><input id="targetSalesInput" type="number" min="0" step=".01" placeholder="Enter target amount"></div><button class="primary" type="submit">Save target</button></form><div><div class="sales-progress"><i id="targetProgressBar"></i></div><div class="progress-meta"><span id="targetProgressText">₹0 / ₹0</span><b id="targetRemaining">Set a target</b></div></div></div>
+<div class="panel target-panel" id="targetPanel"><form id="targetForm" class="target-form"><div class="field"><label>Target sales amount ₹</label><input id="targetSalesInput" type="number" min="0" step=".01" placeholder="Enter target amount"></div><button class="primary" type="submit">Save target</button></form><div><div class="sales-progress"><i id="targetProgressBar"></i></div><div class="progress-meta"><span id="targetProgressText">₹0 / ₹0</span><b id="targetRemaining">Set a target</b></div></div></div>
 <div class="panel"><div class="panel-head"><div><p class="eyebrow">LIVE ANALYTICS</p><h2>Highest stock investments</h2><p>Changes automatically when quantity or rate is edited.</p></div><div class="badge"><b id="mTotalCost">₹0</b><small>INVENTORY + EXPENSES</small></div></div><div class="bars" id="bars"></div></div>
 <div class="notice">Shared cloud workspace: updates from logged-in users appear automatically on mobile and desktop.</div>
 </section>
@@ -334,6 +341,7 @@ function showView(name){
 document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('active',x.id===name)});document.querySelectorAll('.nav').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-view')===name)});if(history.replaceState)history.replaceState(null,'','#'+name);
 }
 document.querySelectorAll('.nav').forEach(function(link){link.addEventListener('click',function(e){e.preventDefault();showView(link.getAttribute('data-view'));window.scrollTo(0,0)})});
+document.querySelectorAll('.card[data-go]').forEach(function(card){function openCard(){var go=card.getAttribute('data-go');if(go==='target'){showView('dashboard');requestAnimationFrame(function(){byId('targetPanel').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){byId('targetSalesInput').focus({preventScroll:true})},450)})}else{showView(go);window.scrollTo({top:0,behavior:'smooth'})}}card.addEventListener('click',openCard);card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openCard()}})});
 byId('itemSearch').addEventListener('input',renderItems);byId('billSearch').addEventListener('input',renderBills);byId('saleSearch').addEventListener('input',renderSales);
 ['item','bill','sale','expense','partner','payment'].forEach(function(k){byId(k+'Cancel').addEventListener('click',function(){resetForm(k)})});
 byId('itemForm').addEventListener('submit',function(e){e.preventDefault();var editId=byId('itemId').value,obj={id:editId||id(),name:byId('itemName').value.trim(),qty:num(byId('itemQty').value),unit:byId('itemUnit').value,price:num(byId('itemPrice').value),notes:byId('itemNotes').value.trim()};if(!obj.name){toast('Enter item name');return}upsert('items',obj,editId);save();resetForm('item');toast(editId?'Item updated':'Item added')});
